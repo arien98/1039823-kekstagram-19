@@ -60,7 +60,7 @@ var createComment = function () {
     avatar: 'img/avatar' + getRandomNumber(1, 6) + '.jpg',
     message: commentsList[getRandomNumber(0, 5)],
     name: namesList[getRandomNumber(0, 5)]
-  }
+  };
 };
 
 var createCard = function (index) {
@@ -69,14 +69,14 @@ var createCard = function (index) {
     description: descriptionList[getRandomNumber(0, 25)],
     likes: getRandomNumber(15, 200),
     comments: [createComment(), createComment(), createComment()]
-  }
+  };
 };
 
 var createCardData = function () {
   for (var i = 0; i < PHOTOS_COUNT; i++) {
     photosData.push(createCard(i));
   }
-}
+};
 
 var fillTemplate = function (photoObj) {
   var cardTemplate = document.querySelector('#picture').content.querySelector('.picture');
@@ -84,14 +84,12 @@ var fillTemplate = function (photoObj) {
   card.querySelector('.picture__img').src = photoObj.url;
   card.querySelector('.picture__comments').textContent = photoObj.comments.length;
   card.querySelector('.picture__likes').textContent = photoObj.likes;
-  console.log(card);
   return card;
 };
 
 var renderCards = function (data) {
   var fragment = document.createDocumentFragment();
   var photosContainer = document.querySelector('.pictures');
-  console.log(data);
   for (var i = 0; i < data.length; i++) {
     fragment.appendChild(fillTemplate(data[i]));
   }
