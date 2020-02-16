@@ -2,8 +2,6 @@
 
 var PHOTOS_COUNT = 25;
 
-var photosData = [];
-
 var descriptionList = [
   'Радоваться в одиночку грустно.',
   'Джентльмен всегда делает вид, что верит даме, даже если он знает, что она говорит неправду.',
@@ -72,13 +70,15 @@ var createCard = function (index) {
   };
 };
 
-var createCardData = function () {
+var createCardsData = function () {
+  var photosData = [];
   for (var i = 0; i < PHOTOS_COUNT; i++) {
     photosData.push(createCard(i));
   }
+  return photosData;
 };
 
-var fillTemplate = function (photoObj) {
+var fillCard = function (photoObj) {
   var cardTemplate = document.querySelector('#picture').content.querySelector('.picture');
   var card = cardTemplate.cloneNode(true);
   card.querySelector('.picture__img').src = photoObj.url;
@@ -91,11 +91,10 @@ var renderCards = function (data) {
   var fragment = document.createDocumentFragment();
   var photosContainer = document.querySelector('.pictures');
   for (var i = 0; i < data.length; i++) {
-    fragment.appendChild(fillTemplate(data[i]));
+    fragment.appendChild(fillCard(data[i]));
   }
   photosContainer.appendChild(fragment);
 };
 
-createCardData();
-renderCards(photosData);
+renderCards(createCardsData());
 
