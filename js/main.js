@@ -48,6 +48,8 @@ var namesList = [
   'Даша',
 ];
 
+var photosData = [];
+
 var getRandomNumber = function (min, max) {
   var number = Math.floor(Math.random() * max);
   return number < min ? min : number;
@@ -55,7 +57,7 @@ var getRandomNumber = function (min, max) {
 
 var createComment = function () {
   return {
-    avatar: 'img/avatar' + getRandomNumber(1, 6) + '.jpg',
+    avatar: 'img/avatar-' + getRandomNumber(1, 6) + '.svg',
     message: commentsList[getRandomNumber(0, 5)],
     name: namesList[getRandomNumber(0, 5)]
   };
@@ -71,7 +73,6 @@ var createCard = function (index) {
 };
 
 var createCardsData = function () {
-  var photosData = [];
   for (var i = 0; i < PHOTOS_COUNT; i++) {
     photosData.push(createCard(i));
   }
@@ -98,3 +99,93 @@ var renderCards = function (data) {
 
 renderCards(createCardsData());
 
+// Полноразмерное фото
+
+var bigPicture = document.querySelector('.big-picture');
+var bigPictureImage = bigPicture.querySelector('.big-picture__img');
+var bigPictureComments = bigPicture.querySelector('.comments-count');
+var bigPictureDescription = bigPicture.querySelector('.social__caption');
+var bigPictureCommentsCount = bigPicture.querySelector('.social__comment-count');
+var bigPictureCommentsLoader = bigPicture.querySelector('.comments-loader');
+var body = document.querySelector('body');
+
+var showBigPicture = function () {
+  bigPicture.classList.remove('hidden');
+  bigPictureImage.src = photosData[0].url;
+  bigPictureComments.textContainer = photosData[0].comments.length;
+  bigPictureDescription.textContent = photosData[0].description;
+  renderComments();
+  bigPictureCommentsCount.classList.add('hidden');
+  bigPictureCommentsLoader.classList.add('hidden');
+  body.classList.add('modal-open');
+};
+
+var fillComment = function (index) {
+  var commentPattern = document.querySelector('.social__comment');
+  var comment = commentPattern.cloneNode(true);
+  comment.querySelector('.social__picture').src = photosData[0].comments[index].avatar;
+  comment.querySelector('.social__picture').alt = photosData[0].comments[index].name;
+  comment.querySelector('.social__text').textContent = photosData[0].comments[index].message;
+  return comment;
+};
+
+var renderComments = function () {
+  var fragment = document.createDocumentFragment();
+  var commentsContainer = document.querySelector('.social__comments');
+  for (var i = 0; i < photosData[0].comments.length; i++) {
+    fragment.appendChild(fillComment(i));
+  }
+  commentsContainer.appendChild(fragment);
+};
+
+showBigPicture();
+
+// // Применение эффекта к изображению
+// var line = document.querySelector('.effect-level');
+// var effectCheckboxes = document.querySelectorAll('.effects__radio');
+// var image = document.querySelector('.img-upload__preview');
+
+// var moveMouseEffectHandler = function () {
+//   line.addEventListener('mouseup', function (evt) {
+//     var x = evt.offsetX;
+//     var effectLevel = document.querySelector('.effect-level__value');
+//     effectLevel.value = Math.round(x / line.clientWidth * 100);
+//     console.log(effectLevel.value);
+//   });
+// };
+
+// var pressEffectButtonHandler = function (item) {
+//   item.addEventListener('change', function () {
+//     var newClass = 'effects__preview--' + item.value;
+//     image.className = 'img-upload__preview ' + newClass;
+//     moveMouseEffectHandler();
+//   });
+// };
+
+// for (var i = 0; i < effectCheckboxes.length; i++) {
+//   pressEffectButtonHandler(effectCheckboxes[i]);
+// };
+
+// // Валидация хэш-тегов
+
+// var hashtagsInput = document.querySelector('.text__hashtags');
+// var imageForm = document.querySelector('.img-upload__form');
+
+// hashtagsInput.addEventListener('change', function () {
+//   var hashtags = hashtagsInput.value.split('#');
+//   hashtags.shift();
+//   console.log(hashtags);
+
+//   if (hashtags.length > 5) {
+//     hashtagsInput.invalid();
+//     hashtagsInput.setCustomValidity('Количество хэштэгов не должно превышать 5-ти');
+//   }
+
+//   for (var i = 0; i < hashtags.length; i++) {
+//     if (hashtags[i].inclide('')) 
+//   };
+// });
+
+// imageForm.addEventListener('submit', function (evt) {
+//   evt.preventDefault();
+// });
