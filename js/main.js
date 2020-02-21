@@ -48,8 +48,6 @@ var namesList = [
   'Даша',
 ];
 
-
-
 var getRandomNumber = function (min, max) {
   var number = Math.floor(Math.random() * max);
   return number < min ? min : number;
