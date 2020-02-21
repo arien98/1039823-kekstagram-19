@@ -48,7 +48,7 @@ var namesList = [
   'Даша',
 ];
 
-var photosData = [];
+
 
 var getRandomNumber = function (min, max) {
   var number = Math.floor(Math.random() * max);
@@ -73,6 +73,7 @@ var createCard = function (index) {
 };
 
 var createCardsData = function () {
+  var photosData = [];
   for (var i = 0; i < PHOTOS_COUNT; i++) {
     photosData.push(createCard(i));
   }
@@ -97,45 +98,46 @@ var renderCards = function (data) {
   photosContainer.appendChild(fragment);
 };
 
-renderCards(createCardsData());
+var photosData = createCardsData();
+
+renderCards(photosData);
 
 // Полноразмерное фото
 
 var bigPicture = document.querySelector('.big-picture');
-var bigPictureImage = bigPicture.querySelector('.big-picture__img');
-var bigPictureComments = bigPicture.querySelector('.comments-count');
-var bigPictureDescription = bigPicture.querySelector('.social__caption');
-var bigPictureCommentsCount = bigPicture.querySelector('.social__comment-count');
-var bigPictureCommentsLoader = bigPicture.querySelector('.comments-loader');
 var body = document.querySelector('body');
+
+var hideBigPictureElements = function () {
+  bigPicture.querySelector('.social__comment-count').classList.add('hidden');
+  bigPicture.querySelector('.comments-loader').classList.add('hidden');
+};
 
 var showBigPicture = function (object) {
   bigPicture.classList.remove('hidden');
-  bigPictureImage.src = object.url;
-  bigPictureComments.textContent = object.comments.length;
-  bigPictureDescription.textContent = object.description;
-  renderComments(object);
-  bigPictureCommentsCount.classList.add('hidden');
-  bigPictureCommentsLoader.classList.add('hidden');
+  bigPicture.querySelector('.big-picture__img').src = object.url;
+  bigPicture.querySelector('.comments-count').textContent = object.comments.length;
+  bigPicture.querySelector('.social__caption').textContent = object.description;
+  bigPicture.querySelector('.social__comments').appendChild(createComments(object));
   body.classList.add('modal-open');
 };
 
-var fillComment = function (index, object) {
+var fillComment = function (photoObject) {
   var commentPattern = document.querySelector('.social__comment');
   var comment = commentPattern.cloneNode(true);
-  comment.querySelector('.social__picture').src = object.comments[index].avatar;
-  comment.querySelector('.social__picture').alt = object.comments[index].name;
-  comment.querySelector('.social__text').textContent = object.comments[index].message;
+  comment.querySelector('.social__picture').src = photoObject.avatar;
+  comment.querySelector('.social__picture').alt = photoObject.name;
+  comment.querySelector('.social__text').textContent = photoObject.message;
   return comment;
 };
 
-var renderComments = function (object) {
+var createComments = function (object) {
   var fragment = document.createDocumentFragment();
-  var commentsContainer = document.querySelector('.social__comments');
   for (var i = 0; i < object.comments.length; i++) {
-    fragment.appendChild(fillComment(i, object));
+    fragment.appendChild(fillComment(object.comments[i]));
   }
-  commentsContainer.appendChild(fragment);
+  return fragment;
 };
 
+hideBigPictureElements();
 showBigPicture(photosData[0]);
+
