@@ -136,6 +136,99 @@ var createComments = function (object) {
   return fragment;
 };
 
-hideBigPictureElements();
-showBigPicture(photosData[0]);
+// hideBigPictureElements();
+// showBigPicture(photosData[0]);
 
+// Загрузка изображения
+
+var ESCAPE_KEY = 'Escape';
+var uploadButton = document.querySelector('#upload-file');
+var imageForm = document.querySelector('.img-upload__overlay');
+
+var utils = {
+  isEscEvent: function (evt, action) {
+    if (evt.key === ESCAPE_KEY) {
+      action();
+    }
+  }
+};
+
+var imageEscapePressHandler = function (evt) {
+  utils.isEscEvent(evt, closeUploadImage);
+};
+
+var showUploadImage = function () {
+  imageForm.classList.remove('hidden');
+  document.querySelector('body').classList.add('modal-open');
+};
+
+var closeUploadImage = function () {
+  imageForm.classList.add('hidden');
+  document.querySelector('body').classList.remove('modal-open');
+  document.removeEventListener('keydown', imageEscapePressHandler);
+};
+
+uploadButton.addEventListener('change', function () {
+  showUploadImage();
+  imageForm.querySelector('#upload-cancel').addEventListener('click', closeUploadImage);
+
+  document.addEventListener('keydown', imageEscapePressHandler);
+});
+
+// Применение эффекта к изображению
+
+var effectIcons = imageForm.querySelectorAll('.effects__radio');
+var image = imageForm.querySelector('.img-upload__preview');
+var effectLevel = imageForm.querySelector('.effect-level__value');
+
+var moveMouseEffectHandler = function (object) {
+  var line = imageForm.querySelector('.effect-level');
+  line.addEventListener('mouseup', function (evt) {
+    effectLevel.value = Math.round(evt.offsetX / line.clientWidth * 100);
+    applyFilter(object, effectLevel.value);
+  });
+};
+
+var applyFilter = function (effect, level) {
+  if (effect.value === 'none') {
+    image.style.filter = 'none';
+  }
+  if (effect.value === 'chrome') {
+    var x = 'grayscale(' + level + '%)';
+    image.style.filter = x;
+  }
+  if (effect.value === 'sepia') {
+    x = 'sepia(' + level + '%)';
+    image.style.filter = x;
+  }
+  if (effect.value === 'marvin') {
+    x = 'invert(' + level + '%)';
+    image.style.filter = x;
+  }
+  if (effect.value === 'phobos') {
+    x = 'blur(' + level / 100 * 3 + 'px)';
+    image.style.filter = x;
+  }
+  if (effect.value === 'heat') {
+    x = 'brightness(' + level / 100 * 3 + ')';
+    image.style.filter = x;
+  }
+};
+
+var pressEffectButtonHandler = function (item) {
+  item.addEventListener('change', function () {
+    effectLevel.value = 0;
+    image.style = 'none';
+    image.className = 'img-upload__preview effects__preview--' + item.value;
+    if (item.value === 'none') {
+      imageForm.querySelector('.img-upload__effect-level').classList.add('hidden');
+    } else {
+      imageForm.querySelector('.img-upload__effect-level').classList.remove('hidden');
+      moveMouseEffectHandler(item);
+    }
+  });
+};
+
+for (var i = 0; i < effectIcons.length; i++) {
+  pressEffectButtonHandler(effectIcons[i]);
+}
