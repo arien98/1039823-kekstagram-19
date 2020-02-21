@@ -136,8 +136,8 @@ var createComments = function (object) {
   return fragment;
 };
 
-// hideBigPictureElements();
-// showBigPicture(photosData[0]);
+hideBigPictureElements();
+showBigPicture(photosData[0]);
 
 // Загрузка изображения
 
