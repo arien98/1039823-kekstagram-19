@@ -241,33 +241,39 @@ effectsList.addEventListener('change', pressEffectButtonHandler);
 
 // Масштабирование изображения
 
-var plusButton = imageForm.querySelector('.scale__control--bigger');
-var minusButton = imageForm.querySelector('.scale__control--smaller');
-var scaleInput = imageForm.querySelector('.scale__control--value');
-var scaleImage = imageForm.querySelector('.img-upload__preview img');
-var scale = 1;
-console.log(scaleInput.value);
+var scale = document.querySelector('.scale');
+var scaleInput = document.querySelector('.scale__control--value');
+var scaleInputNumber = parseInt(scaleInput.value, 10);
+var imgUploadPreview = document.querySelector('.img-upload__preview');
 
-var pressPlusButtonHandler = function () {
-  console.log('Клик по плюсу');
-  if (scale < 1) {
-    scale += 0.25;
-    scaleImage.style.transform = 'scale(' + scale + ')';
-    scaleInput.value += 25;
-    console.log(scaleInput.value);
-  }
+var scaleParam = {
+  MAX: 100,
+  MIN: 25,
+  STEP: 25,
+  MEASURE: '%'
 };
 
-var pressMinusButtonHandler = function () {
-  console.log('Клик по минусу');
-  if (scale > 0.25) {
-    scale -= 0.25;
-    scaleImage.style.transform = 'scale(' + scale + ')';
-    scaleInput.value -= 25;
-    console.log(scaleInput.value);
-  }
+var setScaleValue = function (value) {
+  imgUploadPreview.style.transform = 'scale(' + value / 100 + ')';
+  scaleInput.value = value + scaleParam.MEASURE;
 };
 
-plusButton.addEventListener('click', pressPlusButtonHandler);
+function onScaleClick(evt) {
+  if (
+    evt.target.classList.contains('scale__control--bigger') &&
+    scaleInputNumber < scaleParam.MAX
+  ) {
+    scaleInputNumber += scaleParam.STEP;
+  }
 
-minusButton.addEventListener('click', pressMinusButtonHandler);
+  if (
+    evt.target.classList.contains('scale__control--smaller') &&
+    scaleInputNumber > scaleParam.MIN
+  ) {
+    scaleInputNumber -= scaleParam.STEP;
+  }
+
+  setScaleValue(scaleInputNumber);
+}
+
+scale.addEventListener('click', onScaleClick);
