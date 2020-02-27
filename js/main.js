@@ -238,3 +238,36 @@ var pressEffectButtonHandler = function (evt) {
 };
 
 effectsList.addEventListener('change', pressEffectButtonHandler);
+
+// Масштабирование изображения
+
+var plusButton = imageForm.querySelector('.scale__control--bigger');
+var minusButton = imageForm.querySelector('.scale__control--smaller');
+var scaleInput = imageForm.querySelector('.scale__control--value');
+var scaleImage = imageForm.querySelector('.img-upload__preview img');
+var scale = 1;
+console.log(scaleInput.value);
+
+var pressPlusButtonHandler = function () {
+  console.log('Клик по плюсу');
+  if (scale < 1) {
+    scale += 0.25;
+    scaleImage.style.transform = 'scale(' + scale + ')';
+    scaleInput.value += 25;
+    console.log(scaleInput.value);
+  }
+};
+
+var pressMinusButtonHandler = function () {
+  console.log('Клик по минусу');
+  if (scale > 0.25) {
+    scale -= 0.25;
+    scaleImage.style.transform = 'scale(' + scale + ')';
+    scaleInput.value -= 25;
+    console.log(scaleInput.value);
+  }
+};
+
+plusButton.addEventListener('click', pressPlusButtonHandler);
+
+minusButton.addEventListener('click', pressMinusButtonHandler);
