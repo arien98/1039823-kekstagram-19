@@ -136,8 +136,8 @@ var createComments = function (object) {
   return fragment;
 };
 
-// hideBigPictureElements();
-// showBigPicture(photosData[0]);
+hideBigPictureElements();
+showBigPicture(photosData[0]);
 
 // Загрузка изображения
 
@@ -219,12 +219,11 @@ var filter = {
     measure: ' / 100 * 3',
     unit: ''
   }
-}
+};
 
 var moveMouseEffectHandler = function () {
   var pin = imageForm.querySelector('.effect-level__pin');
   pin.addEventListener('mouseup', function () {
-    console.log('Клик по пину');
   });
 };
 
@@ -258,7 +257,7 @@ var setScaleValue = function (value) {
   scaleInput.value = value + scaleParam.MEASURE;
 };
 
-function onScaleClick(evt) {
+function clickScaleButtonHandler(evt) {
   if (
     evt.target.classList.contains('scale__control--bigger') &&
     scaleInputNumber < scaleParam.MAX
@@ -276,4 +275,4 @@ function onScaleClick(evt) {
   setScaleValue(scaleInputNumber);
 }
 
-scale.addEventListener('click', onScaleClick);
+scale.addEventListener('click', clickScaleButtonHandler);
