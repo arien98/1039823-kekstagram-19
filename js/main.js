@@ -63,6 +63,7 @@ var createComment = function () {
 
 var createCard = function (index) {
   return {
+    id: index + 1,
     url: 'photos/' + (index + 1) + '.jpg',
     description: descriptionList[getRandomNumber(0, 25)],
     likes: getRandomNumber(15, 200),
@@ -81,6 +82,7 @@ var createCardsData = function () {
 var fillCard = function (photoObj) {
   var cardTemplate = document.querySelector('#picture').content.querySelector('.picture');
   var card = cardTemplate.cloneNode(true);
+  card.setAttribute('id', photoObj.id);
   card.querySelector('.picture__img').src = photoObj.url;
   card.querySelector('.picture__comments').textContent = photoObj.comments.length;
   card.querySelector('.picture__likes').textContent = photoObj.likes;
@@ -112,7 +114,7 @@ var hideBigPictureElements = function () {
 
 var showBigPicture = function (object) {
   bigPicture.classList.remove('hidden');
-  bigPicture.querySelector('.big-picture__img').src = object.url;
+  bigPicture.querySelector('.big-picture__img img').src = object.url;
   bigPicture.querySelector('.comments-count').textContent = object.comments.length;
   bigPicture.querySelector('.social__caption').textContent = object.description;
   bigPicture.querySelector('.social__comments').appendChild(createComments(object));
@@ -137,7 +139,6 @@ var createComments = function (object) {
 };
 
 hideBigPictureElements();
-showBigPicture(photosData[0]);
 
 // Загрузка изображения
 
@@ -344,3 +345,36 @@ descriptionField.addEventListener('focus', function () {
 descriptionField.addEventListener('blur', function () {
   document.addEventListener('keydown', imageEscapePressHandler);
 });
+
+// Клики по всем фоткам
+var photosContainer = document.querySelector('.pictures');
+var closeBigPictureButton = bigPicture.querySelector('.big-picture__cancel');
+
+var closeBigPicture = function () {
+  bigPicture.classList.add('hidden');
+  closeBigPictureButton.removeEventListener('click', closeBigPicture);
+  closeBigPictureButton.removeEventListener('click', pictureEscapePressHandler);
+};
+
+var pictureEscapePressHandler = function (evt) {
+  utils.isEscEvent(evt, closeBigPicture);
+};
+
+var renderBigPicture = function (pictureId) {
+  var pictureData = photosData.find(function (element) {
+    return element.id === +pictureId;
+  });
+  showBigPicture(pictureData);
+  closeBigPictureButton.addEventListener('click', closeBigPicture);
+  closeBigPictureButton.addEventListener('keydown', pictureEscapePressHandler);
+};
+
+var clickPhotosContainerHandler = function (evt) {
+  var clickedPicture = evt.target.closest('.picture');
+  if (clickedPicture === null) {
+    return;
+  }
+  renderBigPicture(clickedPicture.id);
+};
+
+photosContainer.addEventListener('click', clickPhotosContainerHandler);
