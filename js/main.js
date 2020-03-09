@@ -137,7 +137,7 @@ var createComments = function (object) {
 };
 
 hideBigPictureElements();
-// showBigPicture(photosData[0]);
+showBigPicture(photosData[0]);
 
 // Загрузка изображения
 
@@ -282,63 +282,12 @@ scale.addEventListener('click', clickScaleButtonHandler);
 var hashtagsField = document.querySelector('.text__hashtags');
 var descriptionField = document.querySelector('.text__description');
 var form = document.querySelector('.img-upload__form');
-var isFormValid = true;
 var HASHTAGS_MAX_COUNT = 5;
-var validityMessages = {
-  tooMany: 'Количество хэштэгов не должно превышать 5-ти',
-  incorrect: 'Хэштэг должен состоять тоько из букв и цифр и быть не длиннее 20 символов',
-  noDuplicate: 'Не должно быть повторяющихся хэштэгов'
-};
 var validityColors = {
   border: 'red',
   background: '#FDD'
 };
 
-// var checkHashtagsValidity = function () {
-//   var hashtags = hashtagsField.value.split(' ').filter((function (item) {
-//     return item !== '';
-//   }));
-//   console.log(hashtags);
-
-//   var isHashtagsLessThanFive = function () {
-//     if (hashtags.length > HASHTAGS_MAX_COUNT) {
-//       isFormValid = false;
-//       hashtagsField.setCustomValidity(validityMessages.tooMany);
-//     } else {
-//       isFormValid = true;
-//       hashtagsField.setCustomValidity('');
-//     }
-//     return isFormValid;
-//   };
-
-//   var isHashtagsCorrect = function () {
-//     hashtags.forEach(function (item) {
-//       if (/^#[a-zA-z1-9]{1,19}/.test(item)) {
-//         isFormValid = true;
-//         hashtagsField.setCustomValidity('');
-//       } else {
-//         isFormValid = false;
-//         hashtagsField.setCustomValidity(validityMessages.incorrect);
-//       }
-//       return isFormValid;
-//     });
-//   };
-
-//   var isHastagsNoDuplicates = function () {
-//     hashtags.every(function (item, index, array) {
-//       if (array.indexOf(item) === index) {
-//         isFormValid = false;
-//         hashtagsField.setCustomValidity(validityMessages.noDuplicate);
-//       } else {
-//         isFormValid = true;
-//         hashtagsField.setCustomValidity('');
-//       }
-//     });
-//     return isFormValid;
-//   };
-
-//   return isHashtagsCorrect && isHastagsNoDuplicates && isHashtagsLessThanFive;
-// };
 
 var checkHashtagsValidity = function () {
   var hashtagsArr = hashtagsField.value.split(' ').filter((function (item) {
@@ -354,10 +303,6 @@ var checkHashtagsValidity = function () {
   });
 
   var isHashtagsLessThanFive = hashtagsArr.length <= HASHTAGS_MAX_COUNT;
-
-  console.log(isHashtagCorrect, "Хештег имеет валидный формат");
-  console.log(isHashtagsLessThanFive, "Хештегов меньше 5");
-  console.log(isHastagsNoDuplicates, "Нет дублирования одинковых хештегов");
 
   return isHashtagCorrect && isHastagsNoDuplicates && isHashtagsLessThanFive;
 };
