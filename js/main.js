@@ -284,58 +284,92 @@ var descriptionField = document.querySelector('.text__description');
 var form = document.querySelector('.img-upload__form');
 var isFormValid = true;
 var HASHTAGS_MAX_COUNT = 5;
+var validityMessages = {
+  tooMany: 'Количество хэштэгов не должно превышать 5-ти',
+  incorrect: 'Хэштэг должен состоять тоько из букв и цифр и быть не длиннее 20 символов',
+  noDuplicate: 'Не должно быть повторяющихся хэштэгов'
+};
+var validityColors = {
+  border: 'red',
+  background: '#FDD'
+};
+
+// var checkHashtagsValidity = function () {
+//   var hashtags = hashtagsField.value.split(' ').filter((function (item) {
+//     return item !== '';
+//   }));
+//   console.log(hashtags);
+
+//   var isHashtagsLessThanFive = function () {
+//     if (hashtags.length > HASHTAGS_MAX_COUNT) {
+//       isFormValid = false;
+//       hashtagsField.setCustomValidity(validityMessages.tooMany);
+//     } else {
+//       isFormValid = true;
+//       hashtagsField.setCustomValidity('');
+//     }
+//     return isFormValid;
+//   };
+
+//   var isHashtagsCorrect = function () {
+//     hashtags.forEach(function (item) {
+//       if (/^#[a-zA-z1-9]{1,19}/.test(item)) {
+//         isFormValid = true;
+//         hashtagsField.setCustomValidity('');
+//       } else {
+//         isFormValid = false;
+//         hashtagsField.setCustomValidity(validityMessages.incorrect);
+//       }
+//       return isFormValid;
+//     });
+//   };
+
+//   var isHastagsNoDuplicates = function () {
+//     hashtags.every(function (item, index, array) {
+//       if (array.indexOf(item) === index) {
+//         isFormValid = false;
+//         hashtagsField.setCustomValidity(validityMessages.noDuplicate);
+//       } else {
+//         isFormValid = true;
+//         hashtagsField.setCustomValidity('');
+//       }
+//     });
+//     return isFormValid;
+//   };
+
+//   return isHashtagsCorrect && isHastagsNoDuplicates && isHashtagsLessThanFive;
+// };
 
 var checkHashtagsValidity = function () {
-  var hashtags = hashtagsField.value.trim().split(' ');
-  console.log(hashtags);
+  var hashtagsArr = hashtagsField.value.split(' ').filter((function (item) {
+    return item !== '';
+  }));
 
-  var isHashtagsLessThanFive = function () {
-    if (hashtags.length > HASHTAGS_MAX_COUNT) {
-      isFormValid = false;
-      hashtagsField.setCustomValidity('Количество хэштэгов не должно превышать 5-ти');
-    } else {
-      isFormValid = true;
-      hashtagsField.setCustomValidity('');
-    }
-    return isFormValid;
-  };
+  var isHashtagCorrect = hashtagsArr.every(function (item) {
+    return /^#[a-zA-Z]{1,19}$/.test(item);
+  });
 
-  var isHashtagsCorrect = function () {
-    hashtags.forEach(function (item) {
-      if (/^#[a-zA-z1-9]{1,19}/.test(item)) {
-        isFormValid = true;
-        hashtagsField.setCustomValidity('');
-      } else {
-        isFormValid = false;
-        hashtagsField.setCustomValidity('Хэштэг должен состоять тоько из букв и цифр и быть не длиннее 20 символов');
-      }
-      return isFormValid;
-    });
-  };
+  var isHastagsNoDuplicates = hashtagsArr.every(function (item, index, array) {
+    return array.indexOf(item) === index;
+  });
 
-  var isHastagsNoDuplicates = function () {
-    hashtags.every(function (item, index, array) {
-      if (array.indexOf(item) === index) {
-        isFormValid = false;
-        hashtagsField.setCustomValidity('Не должно быть повторяющихся хэштэгов');
-      } else {
-        isFormValid = true;
-        hashtagsField.setCustomValidity('');
-      }
-    });
-    return isFormValid;
-  };
+  var isHashtagsLessThanFive = hashtagsArr.length <= HASHTAGS_MAX_COUNT;
 
-  return isHashtagsCorrect && isHastagsNoDuplicates && isHashtagsLessThanFive;
+  console.log(isHashtagCorrect, "Хештег имеет валидный формат");
+  console.log(isHashtagsLessThanFive, "Хештегов меньше 5");
+  console.log(isHastagsNoDuplicates, "Нет дублирования одинковых хештегов");
+
+  return isHashtagCorrect && isHastagsNoDuplicates && isHashtagsLessThanFive;
 };
+
 
 var blurHashtagsInputHandler = function () {
   if (checkHashtagsValidity()) {
     hashtagsField.style.borderColor = '';
     hashtagsField.style.backgroundColor = '';
   } else {
-    hashtagsField.style.borderColor = 'red';
-    hashtagsField.style.backgroundColor = '#FDD';
+    hashtagsField.style.borderColor = validityColors.border;
+    hashtagsField.style.backgroundColor = validityColors.background;
   }
 };
 
