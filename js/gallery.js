@@ -1,73 +1,23 @@
 'use strict';
 
 (function () {
-  // Полноразмерное фото
-
-  var bigPicture = document.querySelector('.big-picture');
-  var body = document.querySelector('body');
-  var photosContainer = document.querySelector('.pictures');
-  var closeBigPictureButton = bigPicture.querySelector('.big-picture__cancel');
-
-  var hideBigPictureElements = function () {
-    bigPicture.querySelector('.social__comment-count').classList.add('hidden');
-    bigPicture.querySelector('.comments-loader').classList.add('hidden');
+  var fillCard = function (photoObj) {
+    var cardTemplate = document.querySelector('#picture').content.querySelector('.picture');
+    var card = cardTemplate.cloneNode(true);
+    card.setAttribute('id', photoObj.id);
+    card.querySelector('.picture__img').src = photoObj.url;
+    card.querySelector('.picture__comments').textContent = photoObj.comments.length;
+    card.querySelector('.picture__likes').textContent = photoObj.likes;
+    return card;
   };
 
-  var showBigPicture = function (object) {
-    bigPicture.classList.remove('hidden');
-    bigPicture.querySelector('.big-picture__img img').src = object.url;
-    bigPicture.querySelector('.comments-count').textContent = object.comments.length;
-    bigPicture.querySelector('.social__caption').textContent = object.description;
-    bigPicture.querySelector('.social__comments').appendChild(createComments(object));
-    body.classList.add('modal-open');
-  };
-
-  var fillComment = function (photoObject) {
-    var commentPattern = document.querySelector('.social__comment');
-    var comment = commentPattern.cloneNode(true);
-    comment.querySelector('.social__picture').src = photoObject.avatar;
-    comment.querySelector('.social__picture').alt = photoObject.name;
-    comment.querySelector('.social__text').textContent = photoObject.message;
-    return comment;
-  };
-
-  var createComments = function (object) {
+  var renderCards = function (data) {
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < object.comments.length; i++) {
-      fragment.appendChild(fillComment(object.comments[i]));
+    var photosContainer = document.querySelector('.pictures');
+    for (var i = 0; i < data.length; i++) {
+      fragment.appendChild(fillCard(data[i]));
     }
-    return fragment;
+    photosContainer.appendChild(fragment);
   };
-
-  hideBigPictureElements();
-
-  // Клики по всем фоткам
-  var closeBigPicture = function () {
-    bigPicture.classList.add('hidden');
-    closeBigPictureButton.removeEventListener('click', closeBigPicture);
-    closeBigPictureButton.removeEventListener('click', pictureEscapePressHandler);
-  };
-
-  var pictureEscapePressHandler = function (evt) {
-    window.utils.isEscEvent(evt, closeBigPicture);
-  };
-
-  var renderBigPicture = function (pictureId) {
-    var pictureData = window.data.photosData.find(function (element) {
-      return element.id === +pictureId;
-    });
-    showBigPicture(pictureData);
-    closeBigPictureButton.addEventListener('click', closeBigPicture);
-    closeBigPictureButton.addEventListener('keydown', pictureEscapePressHandler);
-  };
-
-  var clickPhotosContainerHandler = function (evt) {
-    var clickedPicture = evt.target.closest('.picture');
-    if (clickedPicture === null) {
-      return;
-    }
-    renderBigPicture(clickedPicture.id);
-  };
-
-  photosContainer.addEventListener('click', clickPhotosContainerHandler);
+  renderCards(window.data.createCardsData());
 })();

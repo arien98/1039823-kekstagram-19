@@ -13,7 +13,8 @@
   };
 
   var pressEffectButtonHandler = function (evt) {
-    image.className = 'img-upload__preview ' + window.filter[evt.target.value].className;
+    image.className = 'img-upload__preview ' + window.utils.filter[evt.target.value].className;
+
     imageForm.querySelector('.img-upload__effect-level').classList.add('hidden');
     if (evt.target.value !== 'none') {
       imageForm.querySelector('.img-upload__effect-level').classList.remove('hidden');

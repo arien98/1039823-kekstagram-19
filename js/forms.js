@@ -16,7 +16,7 @@
     imageForm.classList.remove('hidden');
     document.querySelector('body').classList.add('modal-open');
     imageForm.querySelector('.img-upload__effect-level').classList.add('hidden');
-    image.className = 'img-upload__preview ' + window.filter.none.className;
+    image.className = 'img-upload__preview ' + window.utils.filter.none.className;
   };
 
   var closeUploadImage = function () {
