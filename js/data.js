@@ -80,7 +80,5 @@
     return photosData;
   };
 
-  window.data = {
-    createCardsData: createCardsData
-  };
+  window.data = createCardsData();
 })();

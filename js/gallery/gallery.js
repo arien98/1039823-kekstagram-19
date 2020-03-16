@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+  var photosData = window.data;
   var fillCard = function (photoObj) {
     var cardTemplate = document.querySelector('#picture').content.querySelector('.picture');
     var card = cardTemplate.cloneNode(true);
@@ -19,5 +20,6 @@
     }
     photosContainer.appendChild(fragment);
   };
-  renderCards(window.data.createCardsData());
+  renderCards(photosData);
+
 })();
