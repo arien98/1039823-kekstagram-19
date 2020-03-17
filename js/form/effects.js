@@ -11,11 +11,10 @@
   var sliderRange = {
     minLevel: 0,
     maxLevel: 450
-  }
+  };
   var effect = 'none';
 
   var sliderMoveHandler = function (evt) {
-    
     var startCoords = {
       x: evt.clientX,
     };
@@ -68,7 +67,6 @@
   };
 
   var setEffectHandler = function () {
-    console.log(window.utils.filter[effect].type + '(' + getFilterLevelValue() * window.utils.filter[effect].measure + window.utils.filter[effect].unit + ')');
     image.style.filter = window.utils.filter[effect].type + '(' + getFilterLevelValue() * window.utils.filter[effect].measure + window.utils.filter[effect].unit + ')';
   };
 
