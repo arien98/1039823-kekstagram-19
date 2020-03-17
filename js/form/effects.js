@@ -6,13 +6,18 @@
   var effectsList = imageForm.querySelector('.effects__list');
   var image = imageForm.querySelector('.img-upload__preview');
   var pin = imageForm.querySelector('.effect-level__pin');
-  var line = document.querySelector('.effect-level__line');
+  var line = imageForm.querySelector('.effect-level__line');
+  var effectDepth = imageForm.querySelector('.effect-level__depth');
+  var sliderRange = {
+    minLevel: 0,
+    maxLevel: 450
+  }
+  var effect = 'none';
 
-  var sliderMoveHandler = function (evt, object) {
-    console.log('press');
+  var sliderMoveHandler = function (evt) {
+    
     var startCoords = {
       x: evt.clientX,
-      y: evt.clientY
     };
 
     var onMouseMove = function (moveEvt) {
@@ -20,16 +25,28 @@
 
       var shift = {
         x: startCoords.x - moveEvt.clientX,
-        y: startCoords.y - moveEvt.clientY
       };
 
       startCoords = {
         x: moveEvt.clientX,
-        y: moveEvt.clientY
       };
-
-      object.style.top = (object.offsetTop - shift.y) + 'px';
-      object.style.left = (object.offsetLeft - shift.x) + 'px';
+      var position = pin.offsetLeft - shift.x;
+      if (position < sliderRange.minLevel && position < sliderRange.maxLevel) {
+        pin.style.left = sliderRange.minLevel + 'px';
+        effectDepth.style.width = '0%';
+        getFilterLevelValue();
+        return;
+      } else {
+        if (position > sliderRange.maxLevel) {
+          pin.style.left = sliderRange.maxLevel + 'px';
+          effectDepth.style.width = '100%';
+          getFilterLevelValue();
+          return;
+        } else {
+          pin.style.left = (pin.offsetLeft - shift.x) + 'px';
+          effectDepth.style.width = getFilterLevelValue() + '%';
+        }
+      }
     };
 
     var onMouseUp = function (upEvt) {
@@ -37,10 +54,12 @@
 
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
+      pin.removeEventListener('mouseup', setEffectHandler);
     };
 
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
+    pin.addEventListener('mouseup', setEffectHandler);
   };
 
   var getFilterLevelValue = function () {
@@ -48,19 +67,23 @@
     return Math.round(levelValue);
   };
 
-  var setEffect = function (evtSet) {
-     pin.addEventListener('mouseup', function () {
-      pin.addEventListener('mousedown', sliderMoveHandler(evtSet, pin));
-    });
+  var setEffectHandler = function () {
+    console.log(window.utils.filter[effect].type + '(' + getFilterLevelValue() * window.utils.filter[effect].measure + window.utils.filter[effect].unit + ')');
+    image.style.filter = window.utils.filter[effect].type + '(' + getFilterLevelValue() * window.utils.filter[effect].measure + window.utils.filter[effect].unit + ')';
+  };
+
+  var resetFilter = function () {
+    image.style.filter = window.utils.filter[effect].type + '(' + 100 * window.utils.filter[effect].measure + window.utils.filter[effect].unit + ')';
   };
 
   var pressEffectButtonHandler = function (evt) {
-    image.className = 'img-upload__preview ' + window.utils.filter[evt.target.value].className;
-
+    effect = evt.target.value;
+    resetFilter();
+    image.className = 'img-upload__preview ' + window.utils.filter[effect].className;
     imageForm.querySelector('.img-upload__effect-level').classList.add('hidden');
     if (evt.target.value !== 'none') {
       imageForm.querySelector('.img-upload__effect-level').classList.remove('hidden');
-      setEffect();
+      pin.addEventListener('mousedown', sliderMoveHandler);
     }
   };
 
