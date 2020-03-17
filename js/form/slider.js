@@ -1,51 +1,57 @@
-'use strist';
+'use strict';
 
 (function () {
-  var shift;
-  var moveHandler = function (evt) {
+  var imageForm = document.querySelector('.img-upload__overlay');
+  var pin = imageForm.querySelector('.effect-level__pin');
+  var barInput = imageForm.querySelector('.effect-level__value');
+  var effectDepth = imageForm.querySelector('.effect-level__depth');
+  var ratio;
+
+  var sliderMoveHandler = function (evt) {
     var startCoords = {
       x: evt.clientX,
     };
 
-    var moveMouseHandler = function (moveEvt) {
+    var onMouseMove = function (moveEvt) {
       moveEvt.preventDefault();
 
-      shift = {
+      var shift = {
         x: startCoords.x - moveEvt.clientX,
       };
 
       startCoords = {
         x: moveEvt.clientX,
       };
+      var position = pin.offsetLeft - shift.x;
+      var parentWidth = evt.target.parentNode.offsetWidth;
 
-      var position = pin.offsetLeft - window.slider.shift;
-      switch (true) {
-        case position < minLevel:
-          pin.style.left = minLevel + 'px';
-          return;
-        case position > evt.target.parent.style.width:
-          pin.style.left = maxLevel + 'px';
-          return;
-        default:
-          pin.style.left = (pin.offsetLeft - window.slider.shift) + 'px';
-    };
+      if (position < 0) {
+        position = 0;
+        return;
+      }
+
+      if (position > parentWidth) {
+        position = parentWidth;
+        return;
+      }
+
+      ratio = Math.round(position / parentWidth * 100);
+      pin.style.left = position + 'px';
+      effectDepth.style.width = ratio + '%';
+      barInput.value = ratio;
+      window.slider = ratio;
     };
 
-    var upMouseHandler = function (upEvt) {
+    var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
 
-      
-
-      document.removeEventListener('mousemove', moveMouseHandler);
-      document.removeEventListener('mouseup', upMouseHandler);
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
     };
 
-    document.addEventListener('mousemove', moveMouseHandler);
-    document.addEventListener('mouseup', upMouseHandler);
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
   };
 
-  window.slider = {
-    moveHandler: moveHandler,
-    shift: shift
-  };
+  pin.addEventListener('mousedown', sliderMoveHandler);
 })();

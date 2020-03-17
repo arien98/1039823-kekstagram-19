@@ -31,13 +31,13 @@
     phobos: {
       className: 'effects__preview--phobos',
       type: 'blur',
-      measure: '3',
+      measure: '0.03',
       unit: 'px'
     },
     heat: {
       className: 'effects__preview--heat',
       type: 'brightness',
-      measure: '3',
+      measure: '0.03',
       unit: ''
     }
   };
