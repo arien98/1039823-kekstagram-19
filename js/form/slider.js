@@ -8,31 +8,23 @@
   var ratio;
 
   var sliderMoveHandler = function (evt) {
-    var startCoords = {
-      x: evt.clientX,
-    };
+    var startX = evt.clientX;
 
     var onMouseMove = function (moveEvt) {
       moveEvt.preventDefault();
 
-      var shift = {
-        x: startCoords.x - moveEvt.clientX,
-      };
+      var shift = startX - moveEvt.clientX;
 
-      startCoords = {
-        x: moveEvt.clientX,
-      };
-      var position = pin.offsetLeft - shift.x;
+      startX = moveEvt.clientX;
+      var position = pin.offsetLeft - shift;
       var parentWidth = evt.target.parentNode.offsetWidth;
 
       if (position < 0) {
         position = 0;
-        return;
       }
 
       if (position > parentWidth) {
         position = parentWidth;
-        return;
       }
 
       ratio = Math.round(position / parentWidth * 100);
