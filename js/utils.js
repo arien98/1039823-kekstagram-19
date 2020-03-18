@@ -13,31 +13,31 @@
     chrome: {
       className: 'effects__preview--chrome',
       type: 'grayscale',
-      measure: '',
-      unit: '%'
+      measure: '0.01',
+      unit: ''
     },
     sepia: {
       className: 'effects__preview--sepia',
       type: 'sepia',
-      measure: '',
-      unit: '%'
+      measure: '0.01',
+      unit: ''
     },
     marvin: {
       className: 'effects__preview--marvin',
       type: 'invert',
-      measure: '',
+      measure: '1',
       unit: '%'
     },
     phobos: {
       className: 'effects__preview--phobos',
       type: 'blur',
-      measure: ' / 100 * 3',
+      measure: '0.03',
       unit: 'px'
     },
     heat: {
       className: 'effects__preview--heat',
-      type: 'brightnesss',
-      measure: ' / 100 * 3',
+      type: 'brightness',
+      measure: '0.03',
       unit: ''
     }
   };
