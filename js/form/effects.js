@@ -24,7 +24,7 @@
     if (evt.target.value !== 'none') {
       imageForm.querySelector('.img-upload__effect-level').classList.remove('hidden');
       pin.addEventListener('mousedown', function () {
-        document.addEventListener('mouseup', function () {
+        document.addEventListener('mousemove', function () {
           setEffect();
         });
       });
