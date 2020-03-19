@@ -1,7 +1,6 @@
 'use strict';
 
 (function () {
-  var photosData = window.data;
   var fillCard = function (photoObj) {
     var cardTemplate = document.querySelector('#picture').content.querySelector('.picture');
     var card = cardTemplate.cloneNode(true);
@@ -9,6 +8,7 @@
     card.querySelector('.picture__img').src = photoObj.url;
     card.querySelector('.picture__comments').textContent = photoObj.comments.length;
     card.querySelector('.picture__likes').textContent = photoObj.likes;
+    console.log(card);
     return card;
   };
 
@@ -20,6 +20,6 @@
     }
     photosContainer.appendChild(fragment);
   };
-  renderCards(photosData);
+  renderCards(window.transition);
 
 })();
