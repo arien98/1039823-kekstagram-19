@@ -25,7 +25,6 @@
   };
   var onSuccess = function (data) {
     renderCards(data);
-    console.log(data);
     window.gallery = data;
   };
 
