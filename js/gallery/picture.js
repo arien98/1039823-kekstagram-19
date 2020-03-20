@@ -57,8 +57,8 @@
   };
 
   var renderBigPicture = function (pictureId) {
-    var pictureData = window.data.find(function (element) {
-      return element.id === +pictureId;
+    var pictureData = window.gallery.find(function (elem, index) {
+      return index === +pictureId;
     });
     showBigPicture(pictureData);
     closeBigPictureButton.addEventListener('click', closeBigPicture);

@@ -3,7 +3,6 @@
 (function () {
   // Загрузка изображения
 
-
   var uploadButton = document.querySelector('#upload-file');
   var imageForm = document.querySelector('.img-upload__overlay');
   var image = imageForm.querySelector('.img-upload__preview');
@@ -23,6 +22,7 @@
     imageForm.classList.add('hidden');
     document.querySelector('body').classList.remove('modal-open');
     document.removeEventListener('keydown', imageEscapePressHandler);
+    resetForm();
   };
 
   uploadButton.addEventListener('change', function () {
@@ -73,17 +73,30 @@
     }
   };
 
+  var resetForm = function () {
+
+  };
+
+  var onSuccess = function () {
+    closeUploadImage();
+  };
+
+  var onError = function () {
+    closeUploadImage();
+  };
+
   var submitFormHandler = function (evt) {
     evt.preventDefault();
     if (checkHashtagsValidity()) {
-      // отправка формы
+      window.transition.sendData(new FormData(form), onSuccess, onError);
+      console.log(new FormData(form));
+      closeUploadImage();
     }
   };
 
+  form.addEventListener('submit', submitFormHandler);
 
   hashtagsField.addEventListener('blur', blurHashtagsInputHandler);
-
-  form.addEventListener('submit', submitFormHandler);
 
   hashtagsField.addEventListener('focus', function () {
     document.removeEventListener('keydown', imageEscapePressHandler);
