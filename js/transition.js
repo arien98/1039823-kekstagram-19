@@ -1,13 +1,13 @@
 'use strict';
 
 (function () {
-  var usedUrl = {
-    load: 'https://js.dump.academy/kekstagram/data',
-    send: 'https://js.dump.academy/kekstagram'
+  var UsedUrl = {
+    LOAD: 'https://js.dump.academy/kekstagram/data',
+    SEND: 'https://js.dump.academy/kekstagram'
   };
-  var usedMethod = {
-    load: 'GET',
-    send: 'POST'
+  var UsedMethod = {
+    LOAD: 'GET',
+    SEND: 'POST'
   };
   var TIMEOUT = 10000;
   var STATUS_OK = 200;
@@ -36,12 +36,12 @@
   };
 
   var loadData = function (onSuccess, onError) {
-    sendRequest(usedMethod.load, usedUrl.load, onSuccess, onError);
+    sendRequest(UsedMethod.LOAD, UsedUrl.LOAD, onSuccess, onError);
     xhr.send();
   };
 
   var sendData = function (data, onSuccess, onError) {
-    sendRequest(usedMethod.send, usedUrl.send, onSuccess, onError);
+    sendRequest(UsedMethod.SEND, UsedUrl.SEND, onSuccess, onError);
     xhr.send(data);
   };
 

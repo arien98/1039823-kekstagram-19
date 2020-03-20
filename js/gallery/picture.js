@@ -56,9 +56,9 @@
     window.utils.isEscEvent(evt, closeBigPicture);
   };
 
-  var renderBigPicture = function (pictureUrl) {
-    var pictureData = window.gallery.find(function (element) {
-      return element.url === pictureUrl;
+  var renderBigPicture = function (pictureId) {
+    var pictureData = window.gallery.find(function (elem, index) {
+      return index === +pictureId;
     });
     showBigPicture(pictureData);
     closeBigPictureButton.addEventListener('click', closeBigPicture);
@@ -70,8 +70,7 @@
     if (clickedPicture === null) {
       return;
     }
-    var clickedPictureImage = clickedPicture.querySelector('img');
-    renderBigPicture(clickedPictureImage.src);
+    renderBigPicture(clickedPicture.id);
   };
 
   photosContainer.addEventListener('click', clickPhotosContainerHandler);
