@@ -1,6 +1,8 @@
 'use strict';
 
 (function () {
+  // Загрузка изображения
+
   var uploadButton = document.querySelector('#upload-file');
   var imageForm = document.querySelector('.img-upload__overlay');
   var image = imageForm.querySelector('.img-upload__preview');
@@ -87,6 +89,7 @@
     evt.preventDefault();
     if (checkHashtagsValidity()) {
       window.transition.sendData(new FormData(form), onSuccess, onError);
+      console.log(new FormData(form));
       closeUploadImage();
     }
   };
