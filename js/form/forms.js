@@ -73,10 +73,16 @@
     }
   };
 
+  var resetForm = function () {
+
+  };
+
   var submitFormHandler = function (evt) {
     evt.preventDefault();
     if (checkHashtagsValidity()) {
-      // отправка формы
+      window.transition.sendData(new FormData(form));
+      resetForm();
+      closeUploadImage();
     }
   };
 

@@ -20,6 +20,14 @@
     }
     photosContainer.appendChild(fragment);
   };
-  renderCards(window.transition);
 
+  var onError = function (message) {
+    console.error(message);
+  };
+  var onSuccess = function (data) {
+    console.log(data);
+    renderCards();
+  };
+
+  window.transition.loadData(onSuccess, onError);
 })();
