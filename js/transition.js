@@ -5,7 +5,7 @@
     load: 'https://js.dump.academy/kekstagram/data',
     send: 'https://js.dump.academy/kekstagram'
   };
-  var useMethod = {
+  var usedMethod = {
     load: 'GET',
     send: 'POST'
   };
@@ -36,12 +36,12 @@
   };
 
   var loadData = function (onSuccess, onError) {
-    sendRequest(useMethod.load, usedUrl.load, onSuccess, onError);
+    sendRequest(usedMethod.load, usedUrl.load, onSuccess, onError);
     xhr.send();
   };
 
   var sendData = function (data, onSuccess, onError) {
-    sendRequest(useMethod.send, usedUrl.send, onSuccess, onError);
+    sendRequest(usedMethod.send, usedUrl.send, onSuccess, onError);
     xhr.send(data);
   };
 

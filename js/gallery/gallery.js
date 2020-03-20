@@ -8,16 +8,15 @@
     card.querySelector('.picture__img').src = photoObj.url;
     card.querySelector('.picture__comments').textContent = photoObj.comments.length;
     card.querySelector('.picture__likes').textContent = photoObj.likes;
-    console.log(card);
     return card;
   };
 
   var renderCards = function (data) {
     var fragment = document.createDocumentFragment();
     var photosContainer = document.querySelector('.pictures');
-    for (var i = 0; i < data.length; i++) {
-      fragment.appendChild(fillCard(data[i]));
-    }
+    data.forEach(function (element) {
+      fragment.appendChild(fillCard(element));
+    });
     photosContainer.appendChild(fragment);
   };
 
@@ -25,9 +24,10 @@
     console.error(message);
   };
   var onSuccess = function (data) {
+    renderCards(data);
     console.log(data);
-    renderCards();
+    window.gallery = data;
   };
 
-  window.transition.loadData(onSuccess, onError);
+  window.transition.getData(onSuccess, onError);
 })();
