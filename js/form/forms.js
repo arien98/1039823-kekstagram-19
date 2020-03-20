@@ -10,7 +10,7 @@
   var imageEscapePressHandler = function (evt) {
     window.utils.isEscEvent(evt, closeUploadImage);
   };
-  
+
   var resetForm = function () {
     form.querySelector('.img-upload__input').value = '';
     window.effects.resetFilter();
