@@ -10,6 +10,13 @@
   var imageEscapePressHandler = function (evt) {
     window.utils.isEscEvent(evt, closeUploadImage);
   };
+  
+  var resetForm = function () {
+    form.querySelector('.img-upload__input').value = '';
+    window.effects.resetFilter();
+    form.querySelector('.text__hashtags').value = '';
+    form.querySelector('.text__description').value = '';
+  };
 
   var showUploadImage = function () {
     imageForm.classList.remove('hidden');
@@ -73,29 +80,6 @@
     }
   };
 
-  var resetForm = function () {
-
-  };
-
-  var onSuccess = function () {
-    closeUploadImage();
-  };
-
-  var onError = function () {
-    closeUploadImage();
-  };
-
-  var submitFormHandler = function (evt) {
-    evt.preventDefault();
-    if (checkHashtagsValidity()) {
-      window.transition.sendData(new FormData(form), onSuccess, onError);
-      console.log(new FormData(form));
-      closeUploadImage();
-    }
-  };
-
-  form.addEventListener('submit', submitFormHandler);
-
   hashtagsField.addEventListener('blur', blurHashtagsInputHandler);
 
   hashtagsField.addEventListener('focus', function () {
@@ -113,4 +97,9 @@
   descriptionField.addEventListener('blur', function () {
     document.addEventListener('keydown', imageEscapePressHandler);
   });
+
+  window.forms = {
+    closeUploadImage: closeUploadImage,
+    checkHashtagsValidity: checkHashtagsValidity
+  };
 })();
