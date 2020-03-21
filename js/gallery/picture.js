@@ -1,8 +1,6 @@
 'use strict';
 
 (function () {
-  // Полноразмерное фото
-
   var bigPicture = document.querySelector('.big-picture');
   var body = document.querySelector('body');
   var photosContainer = document.querySelector('.pictures');
@@ -26,7 +24,7 @@
   var closeBigPicture = function () {
     bigPicture.classList.add('hidden');
     closeBigPictureButton.removeEventListener('click', closeBigPicture);
-    closeBigPictureButton.removeEventListener('click', pictureEscapePressHandler);
+    document.removeEventListener('click', pictureEscapePressHandler);
   };
 
   var pictureEscapePressHandler = function (evt) {
@@ -39,7 +37,7 @@
     });
     showBigPicture(pictureData);
     closeBigPictureButton.addEventListener('click', closeBigPicture);
-    closeBigPictureButton.addEventListener('keydown', pictureEscapePressHandler);
+    document.addEventListener('keydown', pictureEscapePressHandler);
   };
 
   var clickPhotosContainerHandler = function (evt) {
