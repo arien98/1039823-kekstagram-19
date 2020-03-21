@@ -6,6 +6,14 @@
   var uploadButton = document.querySelector('#upload-file');
   var imageForm = document.querySelector('.img-upload__overlay');
   var image = imageForm.querySelector('.img-upload__preview');
+  var hashtagsField = document.querySelector('.text__hashtags');
+  var descriptionField = document.querySelector('.text__description');
+  var form = document.querySelector('.img-upload__form');
+  var HASHTAGS_MAX_COUNT = 5;
+  var validityColors = {
+    border: 'red',
+    background: '#FDD'
+  };
 
   var imageEscapePressHandler = function (evt) {
     window.utils.isEscEvent(evt, closeUploadImage);
@@ -31,25 +39,6 @@
     document.removeEventListener('keydown', imageEscapePressHandler);
     resetForm();
   };
-
-  uploadButton.addEventListener('change', function () {
-    showUploadImage();
-    imageForm.querySelector('#upload-cancel').addEventListener('click', closeUploadImage);
-
-    document.addEventListener('keydown', imageEscapePressHandler);
-  });
-
-  // Валидация хэштэгов
-
-  var hashtagsField = document.querySelector('.text__hashtags');
-  var descriptionField = document.querySelector('.text__description');
-  var form = document.querySelector('.img-upload__form');
-  var HASHTAGS_MAX_COUNT = 5;
-  var validityColors = {
-    border: 'red',
-    background: '#FDD'
-  };
-
 
   var checkHashtagsValidity = function () {
     var hashtagsArr = hashtagsField.value.split(' ').filter((function (item) {
@@ -79,6 +68,13 @@
       hashtagsField.style.backgroundColor = validityColors.background;
     }
   };
+
+  uploadButton.addEventListener('change', function () {
+    showUploadImage();
+    imageForm.querySelector('#upload-cancel').addEventListener('click', closeUploadImage);
+
+    document.addEventListener('keydown', imageEscapePressHandler);
+  });
 
   hashtagsField.addEventListener('blur', blurHashtagsInputHandler);
 
