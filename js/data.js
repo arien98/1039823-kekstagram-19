@@ -3,7 +3,7 @@
 (function () {
   var PHOTOS_COUNT = 25;
 
-  var descriptionList = [
+  var descriptionsList = [
     'Радоваться в одиночку грустно.',
     'Джентльмен всегда делает вид, что верит даме, даже если он знает, что она говорит неправду.',
     'Все радости и несчастья людей созданы их собственными мыслями.',
@@ -66,7 +66,7 @@
     return {
       id: index + 1,
       url: 'photos/' + (index + 1) + '.jpg',
-      description: descriptionList[getRandomNumber(0, 25)],
+      description: descriptionsList[getRandomNumber(0, 25)],
       likes: getRandomNumber(15, 200),
       comments: [createComment(), createComment(), createComment()]
     };

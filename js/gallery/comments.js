@@ -2,13 +2,10 @@
 
 (function () {
   var COMMENTS_LIMIT = 5;
-
   var commentsContainer = document.querySelector('.social__comments');
-
   var pictureBig = document.querySelector('.big-picture');
   var commentsCounter = pictureBig.querySelector('.social__comment-count');
   var commentsLoader = pictureBig.querySelector('.comments-loader');
-
   var commentsCopy = [];
   var count = 0;
 

@@ -1,14 +1,11 @@
 'use strict';
 
 (function () {
-  // Масштабирование изображения
-
   var scale = document.querySelector('.scale');
   var scaleInput = document.querySelector('.scale__control--value');
   var scaleInputNumber = parseInt(scaleInput.value, 10);
   var imgUploadPreview = document.querySelector('.img-upload__preview');
-
-  var scaleParam = {
+  var scaleParams = {
     MAX: 100,
     MIN: 25,
     STEP: 25,
@@ -17,22 +14,22 @@
 
   var setScaleValue = function (value) {
     imgUploadPreview.style.transform = 'scale(' + value / 100 + ')';
-    scaleInput.value = value + scaleParam.MEASURE;
+    scaleInput.value = value + scaleParams.MEASURE;
   };
 
   function clickScaleButtonHandler(evt) {
     if (
       evt.target.classList.contains('scale__control--bigger') &&
-      scaleInputNumber < scaleParam.MAX
+      scaleInputNumber < scaleParams.MAX
     ) {
-      scaleInputNumber += scaleParam.STEP;
+      scaleInputNumber += scaleParams.STEP;
     }
 
     if (
       evt.target.classList.contains('scale__control--smaller') &&
-      scaleInputNumber > scaleParam.MIN
+      scaleInputNumber > scaleParams.MIN
     ) {
-      scaleInputNumber -= scaleParam.STEP;
+      scaleInputNumber -= scaleParams.STEP;
     }
 
     setScaleValue(scaleInputNumber);
