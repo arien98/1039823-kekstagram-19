@@ -20,13 +20,5 @@
     photosContainer.appendChild(fragment);
   };
 
-  var onError = function (message) {
-    console.error(message);
-  };
-  var onSuccess = function (data) {
-    renderCards(data);
-    window.gallery = data;
-  };
-
-  window.transition.getData(onSuccess, onError);
+  window.gallery = renderCards;
 })();
