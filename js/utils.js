@@ -48,10 +48,16 @@
     }
   };
 
+  var getRandomNumber = function (min, max) {
+    var number = Math.floor(Math.random() * max);
+    return number < min ? min : number;
+  };
+
   window.utils = {
     ESCAPE_KEY: ESCAPE_KEY,
     isEscEvent: isEscEvent,
-    filter: filter
+    filter: filter,
+    getRandomNumber: getRandomNumber
   };
 })();
 
