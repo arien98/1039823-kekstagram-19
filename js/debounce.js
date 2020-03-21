@@ -2,7 +2,7 @@
 
 (function () {
 
-  var TIMEOUT = 500;
+  var TIMEOUT = 50000;
 
   var lastTimeout = null;
 

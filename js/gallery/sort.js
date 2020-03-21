@@ -75,7 +75,7 @@
       clearPictures();
       removeActiveClass();
       evt.target.classList.add('img-filters__button--active');
-      window.gallery(filterButtonMap[evt.target.id]());
+      window.debounce(window.gallery(filterButtonMap[evt.target.id]()));
       window.sort.data = filterButtonMap[evt.target.id]();
     };
 
