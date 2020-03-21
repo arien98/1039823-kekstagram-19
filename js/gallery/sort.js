@@ -65,7 +65,7 @@
 
     var clearPictures = function () {
       var photos = userPictures.querySelectorAll('.picture');
-  
+
       photos.forEach(function (photo) {
         userPictures.removeChild(photo);
       });
@@ -76,7 +76,7 @@
       removeActiveClass();
       evt.target.classList.add('img-filters__button--active');
       window.gallery(filterButtonMap[evt.target.id]());
-      window.filters.data = filterButtonMap[evt.target.id]();
+      window.sort.data = filterButtonMap[evt.target.id]();
     };
 
     window.gallery(window.sort.originData);
