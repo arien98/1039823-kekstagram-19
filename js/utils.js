@@ -55,8 +55,8 @@
 
   window.utils = {
     ESCAPE_KEY: ESCAPE_KEY,
-    isEscEvent: isEscEvent,
     filter: filter,
+    isEscEvent: isEscEvent,
     getRandomNumber: getRandomNumber
   };
 })();

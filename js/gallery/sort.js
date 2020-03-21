@@ -18,8 +18,6 @@
     sortData();
   };
 
-  window.transition.getData(onSuccess, onError);
-
   var sortData = function () {
     var data = window.sort.originData.slice();
 
@@ -87,4 +85,6 @@
       button.addEventListener('click', window.debounce(filterButtonClickHandler));
     });
   };
+
+  window.transition.getData(onSuccess, onError);
 })();
