@@ -6,12 +6,14 @@
   var filterButtons = filters.querySelectorAll('.img-filters__button');
   var userPictures = document.querySelector('.pictures');
 
-  var onError = function (errorMessage) {
-    console.error(errorMessage);
+  var onError = function () {
+    window.submit.errorMessage();
   };
+
   var onSuccess = function (serverData) {
     window.sort = {
-      originData: serverData
+      originData: serverData,
+      sortedData: serverData
     };
     sortData();
   };
@@ -75,14 +77,14 @@
       clearPictures();
       removeActiveClass();
       evt.target.classList.add('img-filters__button--active');
-      window.gallery(filterButtonMap[evt.target.id]());
-      window.sort.data = filterButtonMap[evt.target.id]();
+      window.sort.sortedData = filterButtonMap[evt.target.id]();
+      window.gallery(window.sort.sortedData);
     };
 
-    window.gallery(window.sort.originData);
+    window.gallery(window.sort.sortedData);
     filters.classList.remove('img-filters--inactive');
     filterButtons.forEach(function (button) {
-      button.addEventListener('click', filterButtonClickHandler);
+      button.addEventListener('click', window.debounce(filterButtonClickHandler));
     });
   };
 })();

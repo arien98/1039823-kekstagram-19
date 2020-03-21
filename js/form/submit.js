@@ -15,6 +15,11 @@
     var main = document.querySelector('main');
     var message = messageTemplate.cloneNode(true);
     main.appendChild(message);
+
+    var errorButton = document.querySelector('.error__button');
+    errorButton.addEventListener('click', removeErrorMessage);
+    document.addEventListener('click', removeErrorMessage);
+    document.addEventListener('keydown', errorEscapePressHandler);
   };
 
   var successEscapePressHandler = function (evt) {
@@ -49,10 +54,6 @@
   var onError = function () {
     window.forms.closeUploadImage();
     showErrorMessage();
-    var errorButton = document.querySelector('.error__button');
-    errorButton.addEventListener('click', removeErrorMessage);
-    document.addEventListener('click', removeErrorMessage);
-    document.addEventListener('keydown', errorEscapePressHandler);
   };
 
   var submitFormHandler = function (evt) {
@@ -64,4 +65,8 @@
   };
 
   form.addEventListener('submit', submitFormHandler);
+
+  window.submit = {
+    errorMessage: showErrorMessage
+  };
 })();
