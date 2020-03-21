@@ -6,8 +6,8 @@
   var filterButtons = filters.querySelectorAll('.img-filters__button');
   var userPictures = document.querySelector('.pictures');
 
-  var onError = function (message) {
-    console.error(message);
+  var onError = function (errorMessage) {
+    console.error(errorMessage);
   };
   var onSuccess = function (serverData) {
     window.sort = {
