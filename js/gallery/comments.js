@@ -71,5 +71,4 @@
     renderList: renderCommentsList,
     remove: removeComments
   };
-
 })();
