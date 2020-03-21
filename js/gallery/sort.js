@@ -84,7 +84,7 @@
     window.gallery(window.sort.sortedData);
     filters.classList.remove('img-filters--inactive');
     filterButtons.forEach(function (button) {
-      button.addEventListener('click', filterButtonClickHandler);
+      button.addEventListener('click', window.debounce(filterButtonClickHandler));
     });
   };
 })();
