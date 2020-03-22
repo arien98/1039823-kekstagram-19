@@ -3,7 +3,6 @@
 (function () {
   var uploadButton = document.querySelector('#upload-file');
   var imageForm = document.querySelector('.img-upload__overlay');
-  var imageContainer = imageForm.querySelector('.img-upload__preview-container');
   var image = imageForm.querySelector('.img-upload__preview');
   var hashtagsField = document.querySelector('.text__hashtags');
   var descriptionField = document.querySelector('.text__description');
@@ -25,15 +24,17 @@
     window.utils.isEscEvent(evt, closeUploadImage);
   };
 
-  // var imageEnterPressHandler = function (evt) {
-  //   window.utils.isEnterEvent(evt, window.submit.formHandler);
-  // };
+  var imageEnterPressHandler = function (evt) {
+    window.utils.isEnterEvent(evt, function () {
+      window.submit.sendForm();
+    });
+  };
 
   var resetForm = function () {
     form.querySelector('.img-upload__input').value = '';
+    hashtagsField.value = '';
+    descriptionField.value = '';
     window.effects.resetFilter();
-    form.querySelector('.text__hashtags').value = '';
-    form.querySelector('.text__description').value = '';
   };
 
   var showUploadImage = function () {
@@ -41,7 +42,7 @@
     document.querySelector('body').classList.add('modal-open');
     imageForm.querySelector('.img-upload__effect-level').classList.add('hidden');
     image.className = 'img-upload__preview ' + window.utils.filter.none.className;
-    imageContainer.focus();
+    uploadButton.blur();
   };
 
   var closeUploadImage = function () {
@@ -49,6 +50,7 @@
     document.querySelector('body').classList.remove('modal-open');
     document.removeEventListener('keydown', imageEscapePressHandler);
     imageForm.querySelector('#upload-cancel').removeEventListener('click', closeUploadImage);
+    document.removeEventListener('keydown', imageEnterPressHandler);
     resetForm();
   };
 
@@ -90,7 +92,7 @@
   uploadButton.addEventListener('change', function () {
     showUploadImage();
     imageForm.querySelector('#upload-cancel').addEventListener('click', closeUploadImage);
-    // document.addEventListener('keydown', imageEnterPressHandler);
+    document.addEventListener('keydown', imageEnterPressHandler);
     document.addEventListener('keydown', imageEscapePressHandler);
   });
 
@@ -114,6 +116,7 @@
 
   window.forms = {
     closeUploadImage: closeUploadImage,
-    checkHashtagsValidity: checkHashtagsValidity
+    checkHashtagsValidity: checkHashtagsValidity,
+    reset: resetForm
   };
 })();

@@ -4,7 +4,7 @@
   var scale = document.querySelector('.scale');
   var scaleInput = document.querySelector('.scale__control--value');
   var scaleInputNumber = parseInt(scaleInput.value, 10);
-  var imgUploadPreview = document.querySelector('.img-upload__preview');
+  var imgUploadPreview = document.querySelector('.img-upload__preview img');
   var scaleParams = {
     MAX: 100,
     MIN: 25,

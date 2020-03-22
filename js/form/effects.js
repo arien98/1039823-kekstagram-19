@@ -16,12 +16,13 @@
   var resetFilter = function () {
     image.style.filter = '';
     form.querySelector('.scale__control--value').value = '100%';
-    form.querySelector('.effect-level__value').value = '20';
+    form.querySelector('.effect-level__value').value = '100';
+    document.removeEventListener('mousemove', mouseMoveHandler);
   };
 
   var resetSlider = function () {
-    pin.style.left = '20%';
-    effectDepth.style.width = '20%';
+    pin.style.left = '100%';
+    effectDepth.style.width = '100%';
   };
 
   var mouseMoveHandler = function () {

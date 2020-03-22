@@ -25,6 +25,7 @@
     bigPicture.classList.add('hidden');
     closeBigPictureButton.removeEventListener('click', closeBigPicture);
     document.removeEventListener('click', pictureEscapePressHandler);
+    body.classList.remove('modal-open');
   };
 
   var pictureEscapePressHandler = function (evt) {
