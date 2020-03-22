@@ -1,23 +1,33 @@
 'use strict';
 
 (function () {
-  // Загрузка изображения
-
   var uploadButton = document.querySelector('#upload-file');
   var imageForm = document.querySelector('.img-upload__overlay');
+  var imageContainer = imageForm.querySelector('.img-upload__preview-container');
   var image = imageForm.querySelector('.img-upload__preview');
   var hashtagsField = document.querySelector('.text__hashtags');
   var descriptionField = document.querySelector('.text__description');
   var form = document.querySelector('.img-upload__form');
   var HASHTAGS_MAX_COUNT = 5;
+  var HASHTAGS_REX_EXP = /^#[a-zA-Zа-яА-Я1-9]{1,19}$/;
+  var validityMessage = '';
   var validityColors = {
     border: 'red',
     background: '#FDD'
+  };
+  var userMessage = {
+    lessThanFive: 'Нельзя указать больше пяти хэш-тегов',
+    noDuplicates: 'Один и тот же хэш-тег не может быть использован дважды',
+    correct: 'Неверный формат хештега'
   };
 
   var imageEscapePressHandler = function (evt) {
     window.utils.isEscEvent(evt, closeUploadImage);
   };
+
+  // var imageEnterPressHandler = function (evt) {
+  //   window.utils.isEnterEvent(evt, window.submit.formHandler);
+  // };
 
   var resetForm = function () {
     form.querySelector('.img-upload__input').value = '';
@@ -31,12 +41,14 @@
     document.querySelector('body').classList.add('modal-open');
     imageForm.querySelector('.img-upload__effect-level').classList.add('hidden');
     image.className = 'img-upload__preview ' + window.utils.filter.none.className;
+    imageContainer.focus();
   };
 
   var closeUploadImage = function () {
     imageForm.classList.add('hidden');
     document.querySelector('body').classList.remove('modal-open');
     document.removeEventListener('keydown', imageEscapePressHandler);
+    imageForm.querySelector('#upload-cancel').removeEventListener('click', closeUploadImage);
     resetForm();
   };
 
@@ -45,34 +57,40 @@
       return item !== '';
     }));
 
-    var isHashtagCorrect = hashtagsArr.every(function (item) {
-      return /^#[a-zA-Z]{1,19}$/.test(item);
+    var checkHashtagCorrect = hashtagsArr.every(function (item) {
+      return HASHTAGS_REX_EXP.test(item);
     });
 
-    var isHastagsNoDuplicates = hashtagsArr.every(function (item, index, array) {
+    var checkHastagsNoDuplicates = hashtagsArr.every(function (item, index, array) {
       return array.indexOf(item) === index;
     });
 
-    var isHashtagsLessThanFive = hashtagsArr.length <= HASHTAGS_MAX_COUNT;
+    var checkHashtagsLessThanFive = hashtagsArr.length <= HASHTAGS_MAX_COUNT;
 
-    return isHashtagCorrect && isHastagsNoDuplicates && isHashtagsLessThanFive;
+    checkHashtagCorrect ? null : validityMessage = userMessage.correct;
+    checkHastagsNoDuplicates ? null : validityMessage = userMessage.noDuplicates;
+    checkHashtagsLessThanFive ? null : validityMessage = userMessage.lessThanFive;
+
+    return checkHashtagCorrect && checkHastagsNoDuplicates && checkHashtagsLessThanFive;
   };
 
 
-  var blurHashtagsInputHandler = function () {
+  var blurHashtagsInputHandler = function (evt) {
     if (checkHashtagsValidity()) {
       hashtagsField.style.borderColor = '';
       hashtagsField.style.backgroundColor = '';
+      evt.target.setCustomValidity('');
     } else {
       hashtagsField.style.borderColor = validityColors.border;
       hashtagsField.style.backgroundColor = validityColors.background;
+      evt.target.setCustomValidity(validityMessage);
     }
   };
 
   uploadButton.addEventListener('change', function () {
     showUploadImage();
     imageForm.querySelector('#upload-cancel').addEventListener('click', closeUploadImage);
-
+    // document.addEventListener('keydown', imageEnterPressHandler);
     document.addEventListener('keydown', imageEscapePressHandler);
   });
 

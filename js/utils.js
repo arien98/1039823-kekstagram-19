@@ -1,7 +1,10 @@
 'use strict';
 
 (function () {
-  var ESCAPE_KEY = 'Escape';
+  var keys = {
+    ESCAPE_KEY: 'Escape',
+    ENTER_KEY: 'Enter'
+  };
 
   var filter = {
     none: {
@@ -42,8 +45,14 @@
     }
   };
 
+  var isEnterEvent = function (evt, action) {
+    if (evt.key === keys.ENTER_KEY) {
+      action();
+    }
+  };
+
   var isEscEvent = function (evt, action) {
-    if (evt.key === ESCAPE_KEY) {
+    if (evt.key === keys.ESCAPE_KEY) {
       action();
     }
   };
@@ -54,8 +63,9 @@
   };
 
   window.utils = {
-    ESCAPE_KEY: ESCAPE_KEY,
+    ESCAPE_KEY: keys.ESCAPE_KEY,
     filter: filter,
+    isEnterEvent: isEnterEvent,
     isEscEvent: isEscEvent,
     getRandomNumber: getRandomNumber
   };

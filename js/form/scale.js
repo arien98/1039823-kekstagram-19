@@ -17,23 +17,16 @@
     scaleInput.value = value + scaleParams.MEASURE;
   };
 
-  function clickScaleButtonHandler(evt) {
-    if (
-      evt.target.classList.contains('scale__control--bigger') &&
-      scaleInputNumber < scaleParams.MAX
-    ) {
-      scaleInputNumber += scaleParams.STEP;
-    }
-
-    if (
-      evt.target.classList.contains('scale__control--smaller') &&
-      scaleInputNumber > scaleParams.MIN
-    ) {
-      scaleInputNumber -= scaleParams.STEP;
-    }
+  var clickScaleButtonHandler = function (evt) {
+    (evt.target.classList.contains('scale__control--bigger') && scaleInputNumber < scaleParams.MAX) 
+      ? scaleInputNumber += scaleParams.STEP
+      : null;
+    (evt.target.classList.contains('scale__control--smaller') && scaleInputNumber > scaleParams.MIN)
+      ? scaleInputNumber -= scaleParams.STEP
+      : null;
 
     setScaleValue(scaleInputNumber);
-  }
+  };
 
   scale.addEventListener('click', clickScaleButtonHandler);
 })();

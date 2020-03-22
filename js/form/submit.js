@@ -42,7 +42,7 @@
     document.removeEventListener('keydown', errorEscapePressHandler);
   };
 
-  var onSuccess = function () {
+  var successHandler = function () {
     window.forms.closeUploadImage();
     showSuccesMessage();
     var successButton = document.querySelector('.success__button');
@@ -51,7 +51,7 @@
     document.addEventListener('keydown', successEscapePressHandler);
   };
 
-  var onError = function () {
+  var errorHandler = function () {
     window.forms.closeUploadImage();
     showErrorMessage();
   };
@@ -59,7 +59,7 @@
   var submitFormHandler = function (evt) {
     evt.preventDefault();
     if (window.forms.checkHashtagsValidity()) {
-      window.transition.sendData(new FormData(form), onSuccess, onError);
+      window.transition.sendData(new FormData(form), successHandler, errorHandler);
       window.forms.closeUploadImage();
     }
   };
@@ -67,6 +67,7 @@
   form.addEventListener('submit', submitFormHandler);
 
   window.submit = {
+    formHandler: submitFormHandler,
     errorMessage: showErrorMessage
   };
 })();

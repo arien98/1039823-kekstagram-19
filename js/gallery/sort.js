@@ -6,11 +6,11 @@
   var filterButtons = filters.querySelectorAll('.img-filters__button');
   var userPictures = document.querySelector('.pictures');
 
-  var onError = function () {
+  var errorHandler = function () {
     window.submit.errorMessage();
   };
 
-  var onSuccess = function (serverData) {
+  var successHandler = function (serverData) {
     window.sort = {
       originData: serverData,
       sortedData: serverData
@@ -86,5 +86,5 @@
     });
   };
 
-  window.transition.getData(onSuccess, onError);
+  window.transition.getData(successHandler, errorHandler);
 })();
