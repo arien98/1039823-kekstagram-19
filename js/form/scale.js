@@ -18,7 +18,7 @@
   };
 
   var clickScaleButtonHandler = function (evt) {
-    (evt.target.classList.contains('scale__control--bigger') && scaleInputNumber < scaleParams.MAX) 
+    (evt.target.classList.contains('scale__control--bigger') && scaleInputNumber < scaleParams.MAX)
       ? scaleInputNumber += scaleParams.STEP
       : null;
     (evt.target.classList.contains('scale__control--smaller') && scaleInputNumber > scaleParams.MIN)

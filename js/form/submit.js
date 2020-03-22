@@ -4,31 +4,19 @@
   var form = document.querySelector('.img-upload__form');
 
   var showSuccesMessage = function () {
-    var successButton = document.querySelector('.success__button');
     var messageTemplate = document.querySelector('#success').content.querySelector('.success');
     var main = document.querySelector('main');
     var message = messageTemplate.cloneNode(true);
     main.appendChild(message);
     document.querySelector('body').classList.add('modal-open');
-
-    // successButton.addEventListener('click', removeSuccesMessage);
-    // document.addEventListener('click', removeSuccesMessage);
-    // document.addEventListener('keydown', successEscapePressHandler);
-    // document.addEventListener('keydown', successEnterPressHandler);
   };
 
   var showErrorMessage = function () {
-    var errorButton = document.querySelector('.error__button');
     var messageTemplate = document.querySelector('#error').content;
     var main = document.querySelector('main');
     var message = messageTemplate.cloneNode(true);
     main.appendChild(message);
     document.querySelector('body').classList.add('modal-open');
-
-    // errorButton.addEventListener('click', removeErrorMessage);
-    // document.addEventListener('click', removeErrorMessage);
-    // document.addEventListener('keydown', errorEscapePressHandler);
-    // document.addEventListener('keydown', errorEnterPressHandler);
   };
 
   var successEscapePressHandler = function (evt) {
