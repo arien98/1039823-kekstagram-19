@@ -34,6 +34,8 @@
     form.querySelector('.img-upload__input').value = '';
     hashtagsField.value = '';
     descriptionField.value = '';
+    hashtagsField.style.borderColor = '';
+    hashtagsField.style.backgroundColor = '';
     window.effects.resetFilter();
   };
 
@@ -69,10 +71,15 @@
 
     var checkHashtagsLessThanFive = hashtagsArr.length <= HASHTAGS_MAX_COUNT;
 
-    checkHashtagCorrect ? null : validityMessage = userMessage.correct;
-    checkHastagsNoDuplicates ? null : validityMessage = userMessage.noDuplicates;
-    checkHashtagsLessThanFive ? null : validityMessage = userMessage.lessThanFive;
-
+    if (!checkHashtagCorrect) {
+      validityMessage = userMessage.correct;
+    }
+    if (!checkHastagsNoDuplicates) {
+      validityMessage = userMessage.noDuplicates;
+    }
+    if (!checkHashtagsLessThanFive) {
+      validityMessage = userMessage.lessThanFive;
+    }
     return checkHashtagCorrect && checkHastagsNoDuplicates && checkHashtagsLessThanFive;
   };
 
