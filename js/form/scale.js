@@ -18,14 +18,19 @@
   };
 
   var clickScaleButtonHandler = function (evt) {
-    var ratio = (evt.target.classList.contains('scale__control--bigger') && scaleInputNumber < scaleParams.MAX)
-      ? +1
-      : 0;
-    ratio = (evt.target.classList.contains('scale__control--smaller') && scaleInputNumber > scaleParams.MIN)
-      ? -1
-      : 0;
+    if (
+      evt.target.classList.contains('scale__control--bigger') &&
+      scaleInputNumber < scaleParams.MAX
+    ) {
+      scaleInputNumber += scaleParams.STEP;
+    }
 
-    scaleInputNumber += scaleParams.STEP * ratio;
+    if (
+      evt.target.classList.contains('scale__control--smaller') &&
+      scaleInputNumber > scaleParams.MIN
+    ) {
+      scaleInputNumber -= scaleParams.STEP;
+    }
 
     setScaleValue(scaleInputNumber);
   };
